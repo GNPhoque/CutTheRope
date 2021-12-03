@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 6830606366562016742}
   - component: {fileID: 6927487992820631213}
   - component: {fileID: 1181793851657953741}
+  - component: {fileID: -4147014406838975662}
   m_Layer: 0
   m_Name: Anchor
-  m_TagString: Untagged
+  m_TagString: Anchor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,6 +131,23 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 359
+--- !u!114 &-4147014406838975662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6830606366562015770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fce31dd6f6452334b80400f3f2345ecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ropeParent: {fileID: 6830606367001823489}
+  segmentPrefab: {fileID: 3886745821829350671, guid: ab384d678b9e87b4d8c482f22cc90419, type: 3}
+  prefabJoint: {fileID: 3886745821829350705, guid: ab384d678b9e87b4d8c482f22cc90419, type: 3}
+  selectRopeLength: 0
+  ropeLength: 0
 --- !u!1 &6830606367001823493
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +159,7 @@ GameObject:
   - component: {fileID: 6830606367001823489}
   - component: {fileID: 6830606367001823494}
   m_Layer: 0
-  m_Name: RopeStart
+  m_Name: Rope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

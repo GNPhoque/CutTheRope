@@ -5,40 +5,45 @@ using UnityEngine;
 public class ConnectAnchorToCandy : MonoBehaviour
 {
 	[SerializeField]
+	Transform ropeParent;
+	[SerializeField]
 	GameObject segmentPrefab;
 	[SerializeField]
-	Transform candy;
+	HingeJoint2D prefabJoint;
 	[SerializeField]
-	Transform[] anchors;
+	bool selectRopeLength;
+	[SerializeField]
+	int ropeLength;
 
 	private void Start()
 	{
-		foreach (var anchor in anchors)
+		Transform candy = GameObject.FindGameObjectWithTag("Candy").transform;
+		Transform anchor = transform;
 		{
 			//DEFINITION
-			Vector2 candyDistance = candy.position - anchor.transform.position;
-			Vector2 spawnDirection = candyDistance.normalized;
-			int segmentNumber = Mathf.CeilToInt(candyDistance.magnitude);
-			float distanceBetweenSegments = candyDistance.magnitude / segmentNumber;
-			Vector2 nextSegmentSpawnPos = anchor.position;
+			float candyDistance = Vector3.Distance(candy.position, anchor.position);
+			if (!selectRopeLength)
+			{
+				ropeLength = Mathf.CeilToInt(candyDistance / prefabJoint.anchor.x); 
+			}
 
-			GameObject[] segments = new GameObject[segmentNumber];
+			GameObject[] segments = new GameObject[ropeLength];
 
 			//INSTANTIATE
-			for (int i = 0; i < segmentNumber; i++)
+			for (int i = 0; i < ropeLength; i++)
 			{
-				GameObject go = Instantiate(segmentPrefab, nextSegmentSpawnPos, Quaternion.identity);
-				nextSegmentSpawnPos = spawnDirection * distanceBetweenSegments;
+				GameObject go = Instantiate(segmentPrefab, ropeParent);
 				segments[i] = go;
+				if (i == 0)
+				{
+					anchor.GetComponent<HingeJoint2D>().connectedBody = go.GetComponent<Rigidbody2D>();
+				}
+				else
+				{
+					segments[i - 1].GetComponent<SegmentDrawer>().SetTarget(go.GetComponent<Rigidbody2D>());
+				}
 			}
-
-			anchor.GetComponent<HingeJoint2D>().connectedBody = segments[0].GetComponent<Rigidbody2D>();
-			//SET DRAWER AND HINGE
-			for (int i = 0; i < segmentNumber - 1; i++)
-			{
-				segments[i].GetComponent<SegmentDrawer>().SetTarget(segments[i + 1].GetComponent<Rigidbody2D>(), Vector2.right);
-			}
-			segments[segments.Length-1].GetComponent<SegmentDrawer>().SetTarget(candy.GetComponent<Rigidbody2D>(), Vector2.right);
+			segments[segments.Length - 1].GetComponent<SegmentDrawer>().SetTarget(candy.GetComponent<Rigidbody2D>());
 		}
 	}
 }

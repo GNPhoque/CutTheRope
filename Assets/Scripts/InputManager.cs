@@ -17,9 +17,9 @@ public class InputManager : MonoBehaviour
             touchPos = Camera.main.ScreenToWorldPoint(touch.position);
             touchPosOld = Camera.main.ScreenToWorldPoint(touch.position - touch.deltaPosition);
             List<RaycastHit2D> hits = new List<RaycastHit2D>();
-            int a = Physics2D.Raycast(touchPos, touchPosOld - touchPos, new ContactFilter2D(), hits, Vector2.Distance(touchPos, touchPosOld));
+            int hitsNumber = Physics2D.Raycast(touchPos, touchPosOld - touchPos, new ContactFilter2D(), hits, Vector2.Distance(touchPos, touchPosOld));
             Debug.DrawRay(touchPos, touchPosOld-touchPos, Color.red);
-            if (a > 0)
+            if (hitsNumber > 0)
             {
 				foreach (var hit in hits)
 				{
@@ -35,6 +35,7 @@ public class InputManager : MonoBehaviour
                 if (tr.enabled == false)
 				{
 					tr.enabled = true;
+                    UpdateCollider();
 				}
             }
             else
@@ -43,5 +44,21 @@ public class InputManager : MonoBehaviour
                 tr.enabled = false;
             }
         }
+    }
+
+    void UpdateCollider()
+    {
+        var ec = gameObject.GetComponent<EdgeCollider2D>();
+        Vector3[] points = new Vector3[tr.positionCount];
+        tr.GetPositions(points);
+
+        Vector2[] pointsList = new Vector2[tr.positionCount];
+
+        for (int i = 0; i < points.Length; i++)
+        {
+            pointsList[i] = (points[i]);
+        }
+
+        ec.points = pointsList;
     }
 }

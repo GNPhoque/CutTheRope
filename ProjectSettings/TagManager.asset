@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Candy
   - RopeSegment
+  - StartAnchor
+  - Anchor
   layers:
   - Default
   - TransparentFX

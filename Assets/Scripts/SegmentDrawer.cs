@@ -12,13 +12,9 @@ public class SegmentDrawer : MonoBehaviour
 	[SerializeField]
 	HingeJoint2D hinge;
 
-	bool isSet;
-
-	public void SetTarget(Rigidbody2D rb, Vector2 offset)
+	public void SetTarget(Rigidbody2D rb)
 	{
 		hinge.connectedBody = rb;
-		hinge.anchor = offset;
-		isSet = true;
 		lr.SetPosition(0, Vector3.zero);
 		lr.SetPosition(1, hinge.anchor);
 	}
