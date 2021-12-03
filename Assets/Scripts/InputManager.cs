@@ -35,7 +35,7 @@ public class InputManager : MonoBehaviour
                 if (tr.enabled == false)
 				{
 					tr.enabled = true;
-                    UpdateCollider();
+                    //UpdateCollider();
 				}
             }
             else
