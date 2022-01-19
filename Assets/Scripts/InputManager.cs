@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             touchPos = Camera.main.ScreenToWorldPoint(touch.position);
             touchPosOld = Camera.main.ScreenToWorldPoint(touch.position - touch.deltaPosition);
+            //RaycastHit2D[] hitsNumber = Physics2D.RaycastAll(touchPos, touchPosOld - touchPos, Vector2.Distance(touchPos, touchPosOld));
             List<RaycastHit2D> hits = new List<RaycastHit2D>();
             int hitsNumber = Physics2D.Raycast(touchPos, touchPosOld - touchPos, new ContactFilter2D(), hits, Vector2.Distance(touchPos, touchPosOld));
             Debug.DrawRay(touchPos, touchPosOld-touchPos, Color.red);
@@ -23,6 +24,7 @@ public class InputManager : MonoBehaviour
             {
 				foreach (var hit in hits)
 				{
+                    Debug.Log(hit.collider.name);
 					if (hit.collider.CompareTag("RopeSegment"))
 					{
                         Destroy(hit.collider.gameObject);
